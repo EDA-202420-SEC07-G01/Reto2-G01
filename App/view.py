@@ -99,6 +99,34 @@ def print_req_3(control):
     """
         Función que imprime la solución del Requerimiento 3 en consola
     """
+    status = input("Ingrese el estado de producción de la película (ej.: 'Released', 'Rumored', etc.): ")
+    fecha_i = input("Ingrese la fecha inicial (formato YYYY-MM-DD): ")
+    fecha_f = input("Ingrese la fecha final (formato YYYY-MM-DD): ")
+
+    resultado = logic.req_3(control, status, fecha_i, fecha_f)
+    
+    if resultado[0] == 0 or resultado == None:
+        print("No se encontraron películas que cumplan con los criterios.")
+    else:
+        print("Número total de películas que cumplen con el criterio: " + str(resultado[0]))
+        print("Tiempo promedio de duración de las películas: " + str(resultado[1]) + " minutos")
+        print("\nDetalles de las primeras películas encontradas (hasta 10):")
+        
+        table_data = []
+        for movie in resultado[2]['elements']:
+            table_data.append([
+                movie['release_date'],
+                movie['title'],
+                movie['budget'],
+                movie['revenue'],
+                str(movie.get('gains', 'Indefinido')),
+                movie['runtime'],
+                movie['vote_average'],
+                movie['status']
+            ])
+
+        headers = ['Fecha de publicación', 'Título original', 'Presupuesto', 'Recaudación', 'Ganancia', 'Duración (min)', 'Puntaje de calificación', 'Estado de la pelicula']
+        print(tabulate(table_data, headers=headers, tablefmt='grid'))
     
 
 

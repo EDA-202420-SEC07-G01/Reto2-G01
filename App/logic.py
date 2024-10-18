@@ -16,7 +16,7 @@ def new_logic():
     """
     catalog = {}
     
-    num_elements = 1000  
+    num_elements = 50000
     load_factor = 0.75    
     prime = 109345121
     
@@ -59,13 +59,8 @@ def load_data(catalog, filename):
             
             if id:
                 mp.put(catalog, id, movie_data)
-<<<<<<< HEAD
                 
                 
-=======
-          
-    
->>>>>>> Est-1
 
                 
 def get_data(catalog, id):
@@ -94,10 +89,6 @@ def req_1(catalog, title, original_language):
     
     
 
-<<<<<<< HEAD
-=======
-
->>>>>>> Est-1
 
 def req_2(catalog):
     """
@@ -190,10 +181,6 @@ def req_4(catalog, status, fecha_i, fecha_f):
         
     return numero_peliculas, duracion_promedio, lista_resp
 
-<<<<<<< HEAD
-
-=======
->>>>>>> Est-1
 
 
 def req_5(catalog):
@@ -274,7 +261,9 @@ def req_7(catalog, production_company, anio_i, anio_f ):
     print(movies)
     return lista_resp
 
-        
+catalog = new_logic()
+load_data(catalog, "movies-large.csv")
+print(req_7 (catalog, "Warner Bros.", 1936, 1940))
 
 
 def req_8(catalog):
