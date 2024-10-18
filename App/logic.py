@@ -59,8 +59,13 @@ def load_data(catalog, filename):
             
             if id:
                 mp.put(catalog, id, movie_data)
+<<<<<<< HEAD
                 
                 
+=======
+          
+    
+>>>>>>> Est-1
 
                 
 def get_data(catalog, id):
@@ -89,6 +94,10 @@ def req_1(catalog, title, original_language):
     
     
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> Est-1
 
 def req_2(catalog):
     """
@@ -181,7 +190,10 @@ def req_4(catalog, status, fecha_i, fecha_f):
         
     return numero_peliculas, duracion_promedio, lista_resp
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> Est-1
 
 
 def req_5(catalog):
@@ -199,12 +211,70 @@ def req_6(catalog):
     pass
 
 
-def req_7(catalog):
+def req_7(catalog, production_company, anio_i, anio_f ):
     """
     Retorna el resultado del requerimiento 7
     """
-    # TODO: Modificar el requerimiento 7
-    pass
+    movies = mp.value_set(catalog)
+    anio_i = int(anio_i)
+    anio_f = int(anio_f)
+    lista_resp = lt.new_list()
+    dicc_anios = {}
+    
+    for movie in movies["elements"]:
+        if movie['release_date'] != 'Indefinido':
+            anio = int(movie['release_date'][:4])
+            if anio_i <= anio <= anio_f:
+                for company in movie['production_companies']:
+                    if company['name'].lower() == production_company.lower() and movie['status'] == "Released":
+                        
+                        if anio not in dicc_anios:
+                            dicc_anios[anio] = {
+                                "total_peliculas": 0,
+                                "votacion_promedio": 0,
+                                "duracion_promedio": 0,
+                                "ganancias_totales": 0,
+                                "mejor_pelicula": {"title": "", "votacion_promedio": 0},
+                                "peor_pelicula": {"title": "", "votacion_promedio": 1000000}
+                            }
+                            
+                        dicc_anios[anio]["total_peliculas"] += 1
+                        dicc_anios[anio]["votacion_promedio"] += float(movie['vote_average'])
+                        dicc_anios[anio]["duracion_promedio"] += float(movie['runtime']) if movie['runtime'] != 'Indefinido' else 0
+                        if movie['revenue'] != 'Indefinido' and movie['budget'] != 'Indefinido':
+                            dicc_anios[anio]["ganancias_totales"] += int(movie['revenue']) - int(movie['budget'])
+                            
+                        if float(movie['vote_average']) > dicc_anios[anio]['mejor_pelicula']['votacion_promedio']:
+                            dicc_anios[anio]['mejor_pelicula'] = {
+                                "title": movie['title'],
+                                "votacion_promedio": float(movie['vote_average'])
+                            }
+                            
+                        if float(movie['vote_average']) < dicc_anios[anio]['peor_pelicula']['votacion_promedio']:
+                            dicc_anios[anio]['peor_pelicula'] = {
+                                "title": movie['title'],
+                                "votacion_promedio": float(movie['vote_average'])
+                            }
+                            
+    for anio, diccionario in dicc_anios.items():
+        if diccionario['total_peliculas'] > 0:
+            diccionario["votacion_promedio"] /= diccionario["total_peliculas"]
+            diccionario["duracion_promedio"] /= diccionario["total_peliculas"]
+            
+        lt.add_last(lista_resp, {
+            "anio": anio,
+            "total_peliculas": diccionario["total_peliculas"],
+            "votacion_promedio": diccionario["votacion_promedio"],
+            "duracion_promedio": diccionario["duracion_promedio"],
+            "ganancias_totales": diccionario["ganancias_totales"],
+            "mejor_pelicula": diccionario["mejor_pelicula"],
+            "peor_pelicula": diccionario["peor_pelicula"]
+        })
+        
+    print(movies)
+    return lista_resp
+
+        
 
 
 def req_8(catalog):
