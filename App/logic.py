@@ -87,9 +87,6 @@ def req_1(catalog, title, original_language):
         
     return None
     
-    
-
-
 def req_2(catalog):
     """
     Retorna el resultado del requerimiento 2
@@ -97,10 +94,6 @@ def req_2(catalog):
     pass
 
 def req_3(catalog, idioma, fecha_inicial, fecha_final):
-    """
-    Retorna el resultado del requerimiento 2
-    """
-
     resultado = {
         'total_peliculas': 0,
         'tiempo_promedio': 0,
@@ -108,18 +101,15 @@ def req_3(catalog, idioma, fecha_inicial, fecha_final):
     }
 
     fecha_inicial = datetime.strptime(fecha_inicial, "%Y-%m-%d")
-    fecha_final = datetime.strptime(fecha_final, "%Y-%m-%d")
+    fecha_final = datetime.strptime(fecha_final, "%Y-%m-%d")    
     for key in mp.key_set(catalog):
         pelicula = mp.get(catalog, key)
-        if pelicula['original_language'] == idioma:
+        if pelicula is not None and pelicula['original_language'] == idioma:
             fecha_publicacion = datetime.strptime(pelicula['release_date'], "%Y-%m-%d")
             if fecha_inicial <= fecha_publicacion <= fecha_final:
                 resultado['total_peliculas'] += 1
-                resultado['tiempo_promedio'] += pelicula['runtime']
-                if pelicula['budget'] is not None and pelicula['revenue'] is not None:
-                    ganancia = pelicula['revenue'] - pelicula['budget']
-                else:
-                    ganancia = "Indefinido"
+                resultado['tiempo_promedio'] += pelicula['runtime'] if pelicula['runtime'] is not None else 0
+                ganancia = (pelicula['revenue'] - pelicula['budget']) if (pelicula['budget'] is not None and pelicula['revenue'] is not None) else "Indefinido"
                 resultado['peliculas'].append({
                     'fecha_publicacion': fecha_publicacion.strftime("%Y-%m-%d"),
                     'titulo_original': pelicula['title'],
@@ -133,14 +123,7 @@ def req_3(catalog, idioma, fecha_inicial, fecha_final):
 
     if resultado['total_peliculas'] > 0:
         resultado['tiempo_promedio'] /= resultado['total_peliculas']
-    for i in range(len(resultado['peliculas'])):
-        for j in range(i + 1, len(resultado['peliculas'])):
-            if resultado['peliculas'][i]['fecha_publicacion'] < resultado['peliculas'][j]['fecha_publicacion']:
-                resultado['peliculas'][i], resultado['peliculas'][j] = resultado['peliculas'][j], resultado['peliculas'][i]
-    resultado['peliculas'] = resultado['peliculas'][:10]
-
     return resultado
-
 def req_4(catalog, status, fecha_i, fecha_f):
     """
     Retorna el resultado del requerimiento 4
