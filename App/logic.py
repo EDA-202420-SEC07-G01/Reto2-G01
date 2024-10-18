@@ -261,9 +261,9 @@ def req_7(catalog, production_company, anio_i, anio_f ):
     print(movies)
     return lista_resp
 
-catalog = new_logic()
+"""catalog = new_logic()
 load_data(catalog, "movies-large.csv")
-print(req_7 (catalog, "Warner Bros.", 1936, 1940))
+print(req_7 (catalog, "Warner Bros.", 1936, 1940))"""
 
 
 def req_8(catalog):
