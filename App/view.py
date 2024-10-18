@@ -172,16 +172,68 @@ def print_req_6(control):
     """
         Función que imprime la solución del Requerimiento 6 en consola
     """
-    # TODO: Imprimir el resultado del requerimiento 6
-    pass
+    original_language = input("Ingrese el idioma original: ")
+    anio_i = int(input("Ingrese el año de inicio: "))
+    anio_f = int(input("Ingrese el año fin: "))
+
+    respuesta = logic.req_6(control, original_language, anio_i, anio_f)
+    
+    headers = ["Año", "Total de Películas", "Votación Promedio", "Duración Promedio", 
+               "Ganancias Totales", "Mejor Película", "Puntuación Mejor Película", 
+               "Peor Película", "Puntuación Peor Película"]
+
+    table = []
+    
+    for year_info in respuesta["elements"]:
+        year = year_info['anio']
+        total_peliculas = year_info['total_peliculas']
+        votacion_promedio = year_info['votacion_promedio']
+        duracion_promedio = year_info['duracion_promedio']
+        ganancias_totales = year_info['ganancias_totales']
+        mejor_pelicula = year_info['mejor_pelicula']['title']
+        mejor_pelicula_votacion = year_info['mejor_pelicula']['votacion_promedio']
+        peor_pelicula = year_info['peor_pelicula']['title']
+        peor_pelicula_votacion = year_info['peor_pelicula']['votacion_promedio']
+        
+        table.append([year, total_peliculas, votacion_promedio, duracion_promedio, 
+                      ganancias_totales, mejor_pelicula, mejor_pelicula_votacion, 
+                      peor_pelicula, peor_pelicula_votacion])
+
+    print(tabulate(table, headers, tablefmt="grid"))
 
 
 def print_req_7(control):
     """
         Función que imprime la solución del Requerimiento 7 en consola
     """
-    # TODO: Imprimir el resultado del requerimiento 7
-    pass
+    production_company = input("Ingrese la compania productora: ")
+    anio_i = int(input("Ingrese el anio de inicio: "))
+    anio_f = int(input("Ingrese el año fin: "))
+    
+    respuesta = logic.req_7(control, production_company, anio_i, anio_f)
+    
+    headers = ["Año", "Total de Películas", "Votación Promedio", "Duración Promedio", 
+               "Ganancias Totales", "Mejor Película", "Puntuación Mejor Película", 
+               "Peor Película", "Puntuación Peor Película"]
+
+    table = []
+    
+    for year_info in respuesta["elements"]:
+        year = year_info['anio']
+        total_peliculas = year_info['total_peliculas']
+        votacion_promedio = year_info['votacion_promedio']
+        duracion_promedio = year_info['duracion_promedio']
+        ganancias_totales = year_info['ganancias_totales']
+        mejor_pelicula = year_info['mejor_pelicula']['title']
+        mejor_pelicula_votacion = year_info['mejor_pelicula']['votacion_promedio']
+        peor_pelicula = year_info['peor_pelicula']['title']
+        peor_pelicula_votacion = year_info['peor_pelicula']['votacion_promedio']
+        
+        table.append([year, total_peliculas, votacion_promedio, duracion_promedio, 
+                      ganancias_totales, mejor_pelicula, mejor_pelicula_votacion, 
+                      peor_pelicula, peor_pelicula_votacion])
+
+    print(tabulate(table, headers, tablefmt="grid"))
 
 
 def print_req_8(control):
