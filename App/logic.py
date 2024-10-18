@@ -258,7 +258,6 @@ def req_7(catalog, production_company, anio_i, anio_f ):
             "peor_pelicula": diccionario["peor_pelicula"]
         })
         
-    print(movies)
     return lista_resp
 
 """catalog = new_logic()

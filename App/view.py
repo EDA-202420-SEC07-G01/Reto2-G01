@@ -184,11 +184,11 @@ def print_req_7(control):
     """
         Función que imprime la solución del Requerimiento 7 en consola
     """
-    production_company = input("Ingrese la compania productora")
-    anio_i = int(input("Ingrese el anio de inicio"))
-    anio_f = int(input("Ingrese el año fin"))
+    production_company = input("Ingrese la compania productora: ")
+    anio_i = int(input("Ingrese el anio de inicio: "))
+    anio_f = int(input("Ingrese el año fin: "))
     
-    respuesta = logic.req_7(production_company, anio_i, anio_f)
+    respuesta = logic.req_7(control, production_company, anio_i, anio_f)
     
     headers = ["Año", "Total de Películas", "Votación Promedio", "Duración Promedio", 
                "Ganancias Totales", "Mejor Película", "Puntuación Mejor Película", 
