@@ -60,9 +60,7 @@ def load_data(catalog, filename):
             if id:
                 mp.put(catalog, id, movie_data)
                 
-catalog = new_logic()
-load_data(catalog, "movies-small.csv")
-"print(catalog)"
+                
 
                 
 def get_data(catalog, id):
@@ -90,8 +88,6 @@ def req_1(catalog, title, original_language):
     return None
     
     
-
-print(req_1(catalog, 'BMX Bandits', 'en' ))
 
 
 def req_2(catalog):
@@ -143,12 +139,12 @@ def req_4(catalog, status, fecha_i, fecha_f):
         duracion_promedio = 0
         
     if lt.size(lista_resp) > 20:
-        lista_resp["elements"][:10]
-        lista_resp["size"] = 10
+        lista_resp['elements'] = lista_resp['elements'][:10]  # Limitar a 10
+        lista_resp['size'] = 10
         
     return numero_peliculas, duracion_promedio, lista_resp
 
-print(req_4(catalog, "Released", "1983-12-29", "1988-05-18"))
+
 
 
 def req_5(catalog):
