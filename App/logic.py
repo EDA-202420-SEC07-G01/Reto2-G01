@@ -96,13 +96,50 @@ def req_2(catalog):
     """
     pass
 
-def req_3(catalog):
+def req_3(catalog, idioma, fecha_inicial, fecha_final):
     """
-    Retorna el resultado del requerimiento 3
+    Retorna el resultado del requerimiento 2
     """
-    # TODO: Modificar el requerimiento 3
-    pass
 
+    resultado = {
+        'total_peliculas': 0,
+        'tiempo_promedio': 0,
+        'peliculas': []
+    }
+
+    fecha_inicial = datetime.strptime(fecha_inicial, "%Y-%m-%d")
+    fecha_final = datetime.strptime(fecha_final, "%Y-%m-%d")
+    for key in mp.key_set(catalog):
+        pelicula = mp.get(catalog, key)
+        if pelicula['original_language'] == idioma:
+            fecha_publicacion = datetime.strptime(pelicula['release_date'], "%Y-%m-%d")
+            if fecha_inicial <= fecha_publicacion <= fecha_final:
+                resultado['total_peliculas'] += 1
+                resultado['tiempo_promedio'] += pelicula['runtime']
+                if pelicula['budget'] is not None and pelicula['revenue'] is not None:
+                    ganancia = pelicula['revenue'] - pelicula['budget']
+                else:
+                    ganancia = "Indefinido"
+                resultado['peliculas'].append({
+                    'fecha_publicacion': fecha_publicacion.strftime("%Y-%m-%d"),
+                    'titulo_original': pelicula['title'],
+                    'presupuesto': pelicula['budget'],
+                    'recaudacion': pelicula['revenue'],
+                    'ganancia': ganancia,
+                    'tiempo_duración': pelicula['runtime'],
+                    'puntaje_calificación': pelicula['vote_average'],
+                    'estado': pelicula['status']
+                })
+
+    if resultado['total_peliculas'] > 0:
+        resultado['tiempo_promedio'] /= resultado['total_peliculas']
+    for i in range(len(resultado['peliculas'])):
+        for j in range(i + 1, len(resultado['peliculas'])):
+            if resultado['peliculas'][i]['fecha_publicacion'] < resultado['peliculas'][j]['fecha_publicacion']:
+                resultado['peliculas'][i], resultado['peliculas'][j] = resultado['peliculas'][j], resultado['peliculas'][i]
+    resultado['peliculas'] = resultado['peliculas'][:10]
+
+    return resultado
 
 def req_4(catalog, status, fecha_i, fecha_f):
     """
