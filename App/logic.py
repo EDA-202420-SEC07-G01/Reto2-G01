@@ -176,7 +176,7 @@ def req_4(catalog, status, fecha_i, fecha_f):
         duracion_promedio = 0
         
     if lt.size(lista_resp) > 20:
-        lista_resp['elements'] = lista_resp['elements'][:10]  # Limitar a 10
+        lista_resp['elements'] = lista_resp['elements'][:9]
         lista_resp['size'] = 10
         
     return numero_peliculas, duracion_promedio, lista_resp
