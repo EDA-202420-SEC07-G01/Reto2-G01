@@ -144,13 +144,7 @@ def req_4(catalog, status, fecha_i, fecha_f):
             movie['gains'] = int(movie['revenue']) - int(movie['budget']) if movie['revenue'] != 'Indefinido' and movie['revenue'] != 'Indefinido' else 'Indefinido'
             lt.add_last(lista_resp, movie)
             
-    if lt.size(lista_resp) > 1:
-        def sort_crit(movie1, movie2):
-            date1 = datetime.strptime(movie1['release_date'], "%Y-%m-%d")
-            date2 = datetime.strptime(movie2['release_date'], "%Y-%m-%d")
-            return date1 > date2
-
-    
+        
     lista_resp = lt.merge_sort(lista_resp, sort_crit)
         
     if numero_peliculas > 0:
@@ -164,7 +158,10 @@ def req_4(catalog, status, fecha_i, fecha_f):
         
     return numero_peliculas, duracion_promedio, lista_resp
 
-
+def sort_crit(movie1, movie2):
+            date1 = datetime.strptime(movie1['release_date'], "%Y-%m-%d")
+            date2 = datetime.strptime(movie2['release_date'], "%Y-%m-%d")
+            return date1 > date2
 
 def req_5(catalog):
     """
